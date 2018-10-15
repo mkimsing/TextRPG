@@ -4,13 +4,14 @@ using UnityEngine;
 
 namespace TextRPG
 {
-    public class Chest : MonoBehaviour {
+    public class Chest{
         public string Item { get; set; }
         public int Gold { get; set; }
         public bool Trap { get; set; }
         public bool Heal { get; set; }
         public Enemy Enemy { get; set; }
 
+        //Initialize chest contents randomly
         public Chest()
         {
             int roll = Random.Range(0, 10);
@@ -25,7 +26,6 @@ namespace TextRPG
                         int itemToAdd = Random.Range(0, ItemDatabase.MyItemDatabase.Items.Count);
                         Item = ItemDatabase.MyItemDatabase.Items[itemToAdd];
                         break;
-                    
                     case 2:
                         // HEAL
                         Heal = true;
@@ -47,7 +47,7 @@ namespace TextRPG
                 else
                 {
                     //ENEMY
-                    Enemy = EnemyDatabase.MyEnemyDatabase.Enemies[Random.Range(0, EnemyDatabase.MyEnemyDatabase.Enemies.Count)];
+                    Enemy = EnemyDatabase.MyEnemyDatabase.GetRandomEnemy();
                 }
             }
         }
