@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace TextRPG
 {
     public class ItemDatabase : MonoBehaviour
     {
         public List<string> Items { get; set; } = new List<string>();
-        public static  ItemDatabase MyItemDatabase { get; private set; }
+        public static ItemDatabase MyItemDatabase { get; private set; }
 
         private void Awake()
         {
