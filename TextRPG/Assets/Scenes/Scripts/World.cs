@@ -12,9 +12,10 @@ namespace TextRPG
         private void Awake()
         {
             Dungeon = new Room[Grid.x,Grid.y ];
+            StartCoroutine(GenerateFloor());
         }
 
-        public void GenerateFloor()
+        public IEnumerator GenerateFloor()
         {
             for (int x = 0; x < Grid.x; x++)
             {
@@ -24,6 +25,8 @@ namespace TextRPG
                     Dungeon[x, y].RoomIndex = new Vector2(x, y);
                 }
             }
+
+            yield return new WaitForEndOfFrame();
 
             Vector2Int exitLocation = new Vector2Int(Random.Range(0, Grid.x), Random.Range(0, Grid.y));
             Dungeon[exitLocation.x, exitLocation.y].Exit = true;
