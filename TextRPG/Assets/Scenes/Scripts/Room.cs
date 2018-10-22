@@ -31,6 +31,7 @@ namespace TextRPG
             }
         }
 
+        //Generate specific room
         public Room(Chest chest, Enemy enemy, bool exit, bool empty)
         {
             Chest = chest;

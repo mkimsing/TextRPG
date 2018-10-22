@@ -8,10 +8,11 @@ namespace TextRPG
 
 	    // Use this for initialization
 	    void Start () {
-            Health = 10;
+            Health = 15;
             Attack = 5;
             Defence = 3;
             Gold = 20;
+            Description = "This bear towers over you but it seems more curious than angry... for now";
 
             Inventory.Add("Bear Claw");
 	    }

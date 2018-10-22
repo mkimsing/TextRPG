@@ -5,6 +5,8 @@ using TextRPG;
 
 public class Enemy : Character {
 
+    public string Description;
+
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount); //Equivalent of super call
@@ -15,8 +17,4 @@ public class Enemy : Character {
         base.Death();
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }
