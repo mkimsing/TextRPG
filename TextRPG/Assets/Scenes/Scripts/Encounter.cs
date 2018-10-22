@@ -52,7 +52,9 @@ namespace TextRPG
             GameJournal.Instance.Log(JournalMessages.Attack + playerAttackDamage + JournalMessages.Damage);
             //TODO if dmg kills enemy, do not allow the enemy to retaliate
             player.TakeDamage(enemyAttackDamage);
-            GameJournal.Instance.Log(JournalMessages.Retaliate + enemyAttackDamage + JournalMessages.Damage);
+            GameJournal.Instance.Log("<color = #cc3300>" + JournalMessages.Retaliate + enemyAttackDamage + JournalMessages.Damage + "</color>");
+
+            GameJournal.Instance.Log("<color=#59ffa1>The enemy retaliated, dealing <b>" + enemyAttackDamage + "</b> damage!</color>");
         }
 
         public void Flee()
@@ -61,11 +63,12 @@ namespace TextRPG
             float playerRoll = Random.value;
             float enemyRoll = Random.value;
 
-            GameJournal.Instance.Log(JournalMessages.FleeAttempt);
+            GameJournal.Instance.Log("<color = #660066>" + JournalMessages.FleeAttempt + "</color>");
+            //GameJournal.Instance.Log(JournalMessages.Instance.ColorMessage()
 
             if (player.Speed * playerRoll > enemyRoll * enemy.Speed) //Successful escape
             {
-                GameJournal.Instance.Log(JournalMessages.FleeSuccess + enemyAttackDamage + JournalMessages.Damage);
+                GameJournal.Instance.Log("<color = #666699>" + JournalMessages.FleeSuccess + enemyAttackDamage + JournalMessages.Damage + "</color>" );
                 player.Room.Enemy = null; // Remove the enemy
                 GameJournal.Instance.Log(JournalMessages.FleeFlavor);
             }

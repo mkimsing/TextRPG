@@ -34,7 +34,7 @@ namespace TextRPG
             // Prevent movement if there is an enemy
             if(this.Room.Enemy)
             {
-                return; //TODO if initial room is enemy, movement is prevented since room is flagged as empty as empty and enemy
+                return; //TODO FIX if initial room is enemy, movement is prevented since room is flagged as empty as empty and enemy at the same time
             }
 
             //Logic for movement
