@@ -18,12 +18,16 @@ namespace TextRPG
                 Destroy(this.gameObject);
             else
                 Instance = this;
+
+            logText.supportRichText = true;
         }
 
+        // Functions to print out the text data
         public void Log(string text)
         {
             logText.text += text + "\n";
 
         }
+
     }
 }

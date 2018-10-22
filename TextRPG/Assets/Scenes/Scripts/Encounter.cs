@@ -13,6 +13,9 @@ namespace TextRPG
         Player player;
 
         [SerializeField]
+        JournalMessages messages;
+
+        [SerializeField]
         Button[] dynamicControls;
 
         //Disable all controls
@@ -48,13 +51,16 @@ namespace TextRPG
         {
             int playerAttackDamage = (int)(Random.value * (player.Attack - enemy.Defence));
             int enemyAttackDamage = (int)(Random.value * (enemy.Attack - player.Defence));
-            enemy.TakeDamage(playerAttackDamage);
-            GameJournal.Instance.Log(JournalMessages.Attack + playerAttackDamage + JournalMessages.Damage);
-            //TODO if dmg kills enemy, do not allow the enemy to retaliate
-            player.TakeDamage(enemyAttackDamage);
-            GameJournal.Instance.Log("<color = #cc3300>" + JournalMessages.Retaliate + enemyAttackDamage + JournalMessages.Damage + "</color>");
 
-            GameJournal.Instance.Log("<color=#59ffa1>The enemy retaliated, dealing <b>" + enemyAttackDamage + "</b> damage!</color>");
+            //Attack
+            enemy.TakeDamage(playerAttackDamage);
+            GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.Attack, playerAttackDamage.ToString()));
+            
+            //TODO if dmg kills enemy, do not allow the enemy to retaliate
+
+            //Enemy Retaliate
+            player.TakeDamage(enemyAttackDamage);
+            GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.Retaliate, enemyAttackDamage.ToString()));
         }
 
         public void Flee()
@@ -63,23 +69,21 @@ namespace TextRPG
             float playerRoll = Random.value;
             float enemyRoll = Random.value;
 
-            GameJournal.Instance.Log("<color = #660066>" + JournalMessages.FleeAttempt + "</color>");
-            //GameJournal.Instance.Log(JournalMessages.Instance.ColorMessage()
+            GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.FleeAttempt));
 
             if (player.Speed * playerRoll > enemyRoll * enemy.Speed) //Successful escape
             {
-                GameJournal.Instance.Log("<color = #666699>" + JournalMessages.FleeSuccess + enemyAttackDamage + JournalMessages.Damage + "</color>" );
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.FleeSuccess, enemyAttackDamage.ToString())); 
                 player.Room.Enemy = null; // Remove the enemy
-                GameJournal.Instance.Log(JournalMessages.FleeFlavor);
+                player.Room.Empty = true;
+                player.InvestigateRoom();
             }
             else // Failed escape
             {
-                GameJournal.Instance.Log(JournalMessages.FleeFail + enemyAttackDamage + JournalMessages.Damage);
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.FleeFail, enemyAttackDamage.ToString()));
             }
-
                 player.TakeDamage(enemyAttackDamage);
-
-            player.InvestigateRoom();
+  
         }
     }
 }

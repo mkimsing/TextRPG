@@ -23,9 +23,13 @@ namespace TextRPG
             Defence = 0;
             Speed = 5;
             Inventory = new List<string>();
-            RoomIndex = new Vector2(2, 2); //TODO change start location
+            RoomIndex = new Vector2(2, 2); //TODO change start location, randomize?
             Room = world.Dungeon[(int)RoomIndex.x, (int)RoomIndex.y];
+
+            //Initialize room and UI
             Room.Empty = true;
+            Room.Enemy = null; //TODO check that this fixes the issue of spawning into an enemy
+            encounter.ResetControls();
 
         }
 
@@ -34,7 +38,7 @@ namespace TextRPG
             // Prevent movement if there is an enemy
             if(this.Room.Enemy)
             {
-                return; //TODO FIX if initial room is enemy, movement is prevented since room is flagged as empty as empty and enemy at the same time
+                return;
             }
 
             //Logic for movement
