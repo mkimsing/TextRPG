@@ -12,7 +12,8 @@ namespace TextRPG
             Attack = 5;
             Defence = 3;
             Gold = 20;
-            Description = "This bear towers over you but it seems more curious than angry... for now";
+            Speed = 6;
+            Description = "a massive bear. It towers over you but it seems more curious than angry... for now";
 
             Inventory.Add("Bear Claw");
 	    }

@@ -10,6 +10,7 @@ namespace TextRPG
         public int Attack { get; set; }
         public int Defence { get; set; }
         public int Gold { get; set; }
+        public int Speed { get; set; }
         public Vector2 RoomIndex { get; set; } //Coordinates for location
         public List<string> Inventory { get; set; } = new List<string>();
 

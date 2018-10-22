@@ -11,17 +11,22 @@ namespace TextRPG
         [SerializeField]
         World world;
 
+        [SerializeField]
+        Encounter encounter;
+
         // Use this for initialization
         void Start()
         {
             Floor = 0;
             Health = 30;
             Attack = 10;
-            Defence = 5;
+            Defence = 0;
+            Speed = 5;
             Inventory = new List<string>();
             RoomIndex = new Vector2(2, 2); //TODO change start location
             Room = world.Dungeon[(int)RoomIndex.x, (int)RoomIndex.y];
             Room.Empty = true;
+
         }
 
         public void Move(int direction)
@@ -71,6 +76,7 @@ namespace TextRPG
 
         public void InvestigateRoom()
         {
+            encounter.ResetControls();
             //Check properties of new room
             if (this.Room.Empty)
             {
@@ -83,6 +89,8 @@ namespace TextRPG
             else if (this.Room.Enemy != null)
             {
                 GameJournal.Instance.Log(JournalMessages.EncounterEnemy1 + Room.Enemy.Description + JournalMessages.EncounterEnemy2);
+                encounter.CombatControls();
+                
             }
             else if (this.Room.Exit == true)
             {
