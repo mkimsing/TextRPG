@@ -9,6 +9,11 @@ namespace TextRPG {
 
         public enum MessageTypes
         {
+            MoveNorth,
+            MoveEast,
+            MoveWest,
+            MoveSouth,
+            CannotMove,
             EncounterEmpty,
             EncounterChest,
             EncounterExit,
@@ -35,6 +40,7 @@ namespace TextRPG {
         //Generic texts
         public const string DamageText = " damage!";
         public const string HPText = " health points!";
+        public const string GoldText = " gold!";
 
         //Markup for generic Colors
         public const string DealDamageColor = "<color=#0033cc>"; //Royal blue
@@ -50,10 +56,13 @@ namespace TextRPG {
         public const string MoveSouth = "You move south";
         public const string MoveWest = "You move west";
         public const string CannotMove = "There is nothing in that direction. You cannot move that way.";
+        public const string MoveColor = "<color=##999966>"; // Olive
+        public const string CannotMoveColor = "<color=#ffff99>"; // Cream-Yellow
 
         //Encounter messsages
         public const string EncounterEmpty = "You look around and find that this room is empty.";
         public const string EncounterChest = " You see a chest in the center of the room. What would you like to do?";
+        public const string EncounterChestColor = "<color=##66ffb3>"; // Teal-green
         public const string EncounterExit = @"You see a stairway in the middle of the room. It seems to head down into the next floor.
                 What would you like to do?";
         public const string EncounterEnemy1 = "You encounter ";
@@ -80,9 +89,8 @@ namespace TextRPG {
         public const string FleeFailColor = "<color=#ff9933>"; //Orange
 
         //Loot Message
-        public const string Loot1 = "You've slain ";
-        public const string Loot2 = "You search the carcass and discover ";
-        public const string Loot3 = " gold!";
+        public const string Loot1 = "You've slain the ";
+        public const string Loot2 = "\n You search the carcass and discover ";
 
         //Chest Result Messages
         public const string ChestTrap = "The chest was a trap! You take ";
@@ -101,11 +109,27 @@ namespace TextRPG {
             string BoldValue = Bold + value + EndBold;
             switch(messageType)
             {
+                case MessageTypes.MoveNorth:
+                    msg = MoveColor + MoveNorth + EndColor;
+                    break;
+                case MessageTypes.MoveEast:
+                    msg = MoveColor + MoveEast + EndColor;
+                    break;
+                case MessageTypes.MoveWest:
+                    msg = MoveColor + MoveWest + EndColor;
+                    break;
+                case MessageTypes.MoveSouth:
+                    msg = MoveColor + MoveSouth + EndColor;
+                    break;
+                case MessageTypes.CannotMove:
+                    msg = CannotMoveColor + CannotMove + EndColor;
+                    break;
+                // =============================================================
                 case MessageTypes.EncounterEmpty:
                     msg = EncounterEmpty;
                     break;
                 case MessageTypes.EncounterChest:
-                    msg = EncounterChest;
+                    msg = EncounterChestColor + EncounterChest + EndColor;
                     break;
                 case MessageTypes.EncounterExit:
                     msg = EncounterExit;
@@ -113,7 +137,7 @@ namespace TextRPG {
                 case MessageTypes.EncounterEnemy:
                     msg = EncounterEnemy1 + EnemyColor + description + EndColor + EncounterEnemy2;
                     break;
-
+                // ===============================================================
                 case MessageTypes.Attack:
                     msg = AttackColor + Attack + EndColor; 
                     msg+= DealDamageColor + BoldValue + EndColor +  AttackColor + DamageText + EndColor;
@@ -137,9 +161,10 @@ namespace TextRPG {
                 case MessageTypes.ExitFloor:
                     msg = ExitFloor + BoldValue;
                     break;
+                //==========================================================================================================
                 case MessageTypes.Loot:
                     msg = Loot1 + EnemyColor + description + EndColor + Loot2 + ItemColor + description2 + EndColor;
-                    msg += "and" + GoldColor + BoldValue + EndColor + Loot3;
+                    msg += " and " + GoldColor + BoldValue + EndColor + GoldText;
                     break;
                 case MessageTypes.ChestTrap:
                     msg = ChestTrap + TakeDamageColor + BoldValue + EndColor + DamageText;
@@ -151,7 +176,7 @@ namespace TextRPG {
                     msg = ChestEnemyColor + ChestEnemy + EndColor;
                     break;
                 case MessageTypes.ChestGold:
-                    msg = ChestGold + GoldColor + BoldValue + EndColor;
+                    msg = ChestGold + GoldColor + BoldValue + EndColor + GoldText;
                     break;
                 case MessageTypes.ChestItem:
                     msg = ChestItem + ItemColor + description + EndColor;

@@ -13,6 +13,9 @@ namespace TextRPG
         [SerializeField]
         Encounter encounter;
 
+        [SerializeField]
+        JournalMessages messages;
+
         // Use this for initialization
         void Start()
         {
@@ -44,26 +47,27 @@ namespace TextRPG
             if( direction == 0 && RoomIndex.y >0) // North movement
             {
                 RoomIndex -= Vector2.up;
-                GameJournal.Instance.Log(JournalMessages.MoveNorth);
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.MoveNorth));
+
             }
             else if (direction == 1 && RoomIndex.x < world.Dungeon.GetLength(0) -1) // East movement
             {
                 RoomIndex += Vector2.right;
-                GameJournal.Instance.Log(JournalMessages.MoveEast);
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.MoveEast));
             }
             else if (direction == 2 && RoomIndex.y < world.Dungeon.GetLength(1) -1) // South movement
             {
                 RoomIndex -= Vector2.down;
-                GameJournal.Instance.Log(JournalMessages.MoveSouth);
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.MoveSouth));
             }
             else if (direction == 3 && RoomIndex.x > 0) // West movement
             {
                 RoomIndex += Vector2.left;
-                GameJournal.Instance.Log(JournalMessages.MoveWest);
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.MoveWest));
             }
             else
             {
-                GameJournal.Instance.Log(JournalMessages.CannotMove);
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.CannotMove));
             }
 
             //If we did actually move
@@ -83,23 +87,24 @@ namespace TextRPG
             //Check properties of new room
             if (this.Room.Empty)
             {
-                GameJournal.Instance.Log(JournalMessages.EncounterEmpty);
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.EncounterEmpty));
             }
             else if (this.Room.Chest != null)
             {
                 encounter.ChestControls();
-                GameJournal.Instance.Log(JournalMessages.EncounterChest);
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.EncounterChest));
             }
             else if (this.Room.Enemy != null)
             {
-                GameJournal.Instance.Log(JournalMessages.EncounterEnemy1 + Room.Enemy.Description + JournalMessages.EncounterEnemy2);
                 encounter.CombatControls();
-                
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.EncounterEnemy, "", Room.Enemy.Description));
+
+
             }
             else if (this.Room.Exit == true)
             {
                 encounter.ExitControls();
-                GameJournal.Instance.Log(JournalMessages.EncounterExit);
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.EncounterExit));
             }
         }
 
@@ -111,7 +116,6 @@ namespace TextRPG
         public override void TakeDamage(int amount)
         {
             base.TakeDamage(amount);
-            Debug.Log("Player's TakeDamage");
         }
 
         public override void Death()

@@ -15,6 +15,7 @@ namespace TextRPG
             Defence = 3;
             Gold = 35;
             Speed = 3;
+            Name = "Walrus";
             Description = "a large walrus with sharp tusks";
 
             Inventory.Add("Walrus Tusk");

@@ -926,6 +926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   world: {fileID: 45843990}
   encounter: {fileID: 1990652743}
+  messages: {fileID: 625465230}
 --- !u!4 &625465229
 Transform:
   m_ObjectHideFlags: 0

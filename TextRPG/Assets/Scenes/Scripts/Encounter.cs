@@ -13,6 +13,7 @@ namespace TextRPG
     public class Encounter : MonoBehaviour {
 
         public Enemy enemy { get; set; }
+
         [SerializeField]
         Player player;
 
@@ -65,14 +66,16 @@ namespace TextRPG
             int enemyAttackDamage = (int)(Random.value * (enemy.Attack - player.Defence));
 
             //Attack
-            enemy.TakeDamage(playerAttackDamage);
             GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.Attack, playerAttackDamage.ToString()));
-            
+            enemy.TakeDamage(playerAttackDamage);
+
+
             //TODO if dmg kills enemy, do not allow the enemy to retaliate
 
             //Enemy Retaliate
-            player.TakeDamage(enemyAttackDamage);
             GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.Retaliate, enemyAttackDamage.ToString()));
+            player.TakeDamage(enemyAttackDamage);
+            
         }
 
         public void Flee()
@@ -82,6 +85,8 @@ namespace TextRPG
             float enemyRoll = Random.value;
 
             GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.FleeAttempt));
+
+            player.TakeDamage(enemyAttackDamage); // Deal damage regardless of flee success
 
             if (player.Speed * playerRoll > enemyRoll * enemy.Speed) //Successful escape
             {
@@ -94,7 +99,6 @@ namespace TextRPG
             {
                 GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.FleeFail, enemyAttackDamage.ToString()));
             }
-                player.TakeDamage(enemyAttackDamage);
   
         }
 
@@ -110,7 +114,7 @@ namespace TextRPG
             player.AddItem(this.enemy.Inventory[0]);
             player.Gold += this.enemy.Gold;
             GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.Loot, 
-                this.enemy.Gold.ToString(), this.enemy.Description, this.enemy.Inventory[0]));
+                this.enemy.Gold.ToString(), this.enemy.Name, this.enemy.Inventory[0]));
 
             player.Room.Enemy = null;
             player.Room.Empty = true;

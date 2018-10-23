@@ -6,6 +6,9 @@ using TextRPG;
 public class Enemy : Character {
 
     public string Description;
+    public string Name;
+
+    public Player player;
 
     public override void TakeDamage(int amount)
     {
@@ -16,6 +19,16 @@ public class Enemy : Character {
     {
         base.Death();
         Encounter.OnEnemyDeath();
+    }
+
+    public void Strike()
+    {
+        player.TakeDamage(this.Attack);
+    }
+
+    public void Strike(int damage)
+    {
+        player.TakeDamage(damage);
     }
 
 }
