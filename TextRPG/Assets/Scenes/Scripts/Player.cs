@@ -8,8 +8,7 @@ namespace TextRPG
         public int Floor { get; set; }
         public Room Room { get; set; }
 
-        [SerializeField]
-        World world;
+        public World world;
 
         [SerializeField]
         Encounter encounter;
@@ -88,6 +87,7 @@ namespace TextRPG
             }
             else if (this.Room.Chest != null)
             {
+                encounter.ChestControls();
                 GameJournal.Instance.Log(JournalMessages.EncounterChest);
             }
             else if (this.Room.Enemy != null)
@@ -98,6 +98,7 @@ namespace TextRPG
             }
             else if (this.Room.Exit == true)
             {
+                encounter.ExitControls();
                 GameJournal.Instance.Log(JournalMessages.EncounterExit);
             }
         }
@@ -117,6 +118,8 @@ namespace TextRPG
         {
             base.Death();
         }
+
+
     }
 
 }

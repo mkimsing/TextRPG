@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/* Manages logic for actions when encountering objects/items/enemies in the dungeon */
+/* 
+ * Manages logic for actions when encountering objects/items/enemies in the dungeon
+ * Includes most dungeon functions and actions (except movement)
+ * 
+ */
 namespace TextRPG
 { 
     public class Encounter : MonoBehaviour {
@@ -17,6 +21,14 @@ namespace TextRPG
 
         [SerializeField]
         Button[] dynamicControls;
+
+        public delegate void OnEnemyDeathHandler();
+        public static OnEnemyDeathHandler OnEnemyDeath;
+
+        private void Start()
+        {
+            OnEnemyDeath += Loot;
+        }
 
         //Disable all controls
         public void ResetControls()
@@ -84,6 +96,61 @@ namespace TextRPG
             }
                 player.TakeDamage(enemyAttackDamage);
   
+        }
+
+        public void ExitFloor()
+        {
+            StartCoroutine(player.world.GenerateFloor());
+            player.Floor += 1;
+            GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.ExitFloor, player.Floor.ToString()));
+        }
+
+        public void Loot()
+        {
+            player.AddItem(this.enemy.Inventory[0]);
+            player.Gold += this.enemy.Gold;
+            GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.Loot, 
+                this.enemy.Gold.ToString(), this.enemy.Description, this.enemy.Inventory[0]));
+
+            player.Room.Enemy = null;
+            player.Room.Empty = true;
+            player.InvestigateRoom();
+        }
+
+        public void OpenChest()
+        {
+            Chest chest = player.Room.Chest;
+            if(chest.Trap)
+            {
+                player.TakeDamage(chest.DamageAmount);
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.ChestTrap, chest.DamageAmount.ToString()));
+            }
+            else if(chest.Heal)
+            {
+                player.TakeDamage(-chest.HealAmount);
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.ChestHeal, chest.HealAmount.ToString()));
+            }
+            else if (chest.Enemy)
+            {
+                player.Room.Enemy = chest.Enemy;
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.ChestEnemy));
+                player.Room.Chest = null; //Remove chest here since investigating to discover enemy
+                player.InvestigateRoom();
+            }
+            else if (chest.GoldAmount > 0)
+            {
+                player.Gold += chest.GoldAmount;
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.ChestGold, chest.GoldAmount.ToString()));
+            }
+            else if(chest.Item != null)
+            {
+                player.AddItem(chest.Item);
+                GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.ChestItem,"", chest.Item));
+            }
+
+            player.Room.Chest = null; // Remove chest
+            dynamicControls[2].interactable = false; // Disable loot button
+
         }
     }
 }
