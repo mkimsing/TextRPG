@@ -134,7 +134,8 @@ namespace TextRPG
             {
                 player.Room.Enemy = chest.Enemy;
                 GameJournal.Instance.Log(messages.BuildMessage(JournalMessages.MessageTypes.ChestEnemy));
-                player.Room.Chest = null; //Remove chest here since investigating to discover enemy
+
+                player.Room.Chest = null; //Remove chest here since investigating to 'discover' chest enemy
                 player.InvestigateRoom();
             }
             else if (chest.GoldAmount > 0)

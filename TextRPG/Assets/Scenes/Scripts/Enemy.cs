@@ -15,6 +15,7 @@ public class Enemy : Character {
     public override void Death()
     {
         base.Death();
+        Encounter.OnEnemyDeath();
     }
 
 }
