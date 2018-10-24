@@ -21,5 +21,12 @@ namespace TextRPG
             Inventory.Add("Walrus Tusk");
         }
 
+        public override void Strike()
+        {
+            int enemyAttackDamage = (int)(Random.value * (Attack - SceneManager.Instance.player.Defence));
+            GameJournal.Instance.Log(SceneManager.Instance.messages.BuildMessage(JournalMessages.MessageTypes.Retaliate, enemyAttackDamage.ToString()));
+            SceneManager.Instance.player.TakeDamage(enemyAttackDamage);
+        }
+
     }
 }
