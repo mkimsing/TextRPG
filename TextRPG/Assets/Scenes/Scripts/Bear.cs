@@ -9,12 +9,13 @@ namespace TextRPG
 	    // Use this for initialization
 	    void Start () {
             Health = 15;
-            Attack = 5;
+            Attack = 3;
             Defence = 3;
             Gold = 20;
             Speed = 6;
             Name = "Bear";
-            Description = "a massive bear. It towers over you but it seems more curious than angry... for now";
+            Description = "a massive bear";
+            EncounterText = "It roars and stands up. The bear towers over you but it seems more curious than angry... for now.";
             Inventory.Add("Bear Claw");
 	    }
 
@@ -24,6 +25,5 @@ namespace TextRPG
             GameJournal.Instance.Log(SceneManager.Instance.messages.BuildMessage(JournalMessages.MessageTypes.Retaliate, enemyAttackDamage.ToString()));
             SceneManager.Instance.player.TakeDamage(enemyAttackDamage);
         }
-
     }
 }

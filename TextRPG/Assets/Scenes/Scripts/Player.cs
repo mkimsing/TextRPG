@@ -29,6 +29,8 @@ namespace TextRPG
             Room.Empty = true;
             Room.Enemy = null; //TODO check that this fixes the issue of spawning into an enemy
             encounter.ResetControls();
+            UIController.OnPlayerStatChange();
+            UIController.OnPlayerInventoryChange();
 
         }
 
@@ -77,7 +79,7 @@ namespace TextRPG
                 InvestigateRoom();
             }
 
-            Debug.Log("Location is: " + (int)RoomIndex.x + " " + (int)RoomIndex.y); //TODO remove debug statement
+            Debug.Log("Location is: " + (int)RoomIndex.x + " " + (int)RoomIndex.y); //TODO remove player location statement
         }
 
         public void InvestigateRoom()
@@ -109,11 +111,13 @@ namespace TextRPG
         public void AddItem(string item)
         {
             Inventory.Add(item);
+            UIController.OnPlayerInventoryChange();
         }
 
         public override void TakeDamage(int amount)
         {
             base.TakeDamage(amount);
+            UIController.OnPlayerStatChange();
         }
 
         public override void Death()

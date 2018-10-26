@@ -8,16 +8,6 @@ using TextRPG;
  */
 public class PlayerCombatBehavior : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public void Attack()
     {
         int playerAttackDamage = (int)(Random.value * (SceneManager.Instance.player.Attack - CombatManager.Instance.EnemyInCombat.Defence));

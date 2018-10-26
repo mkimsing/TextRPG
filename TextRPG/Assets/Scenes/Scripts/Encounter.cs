@@ -36,9 +36,11 @@ namespace TextRPG
         //Enable combat related controls
         public void CombatControls()
         {
-            this.enemy = CombatManager.Instance.MakeEnemy(SceneManager.Instance.player.Room.Enemy);
+            enemy = CombatManager.Instance.MakeEnemy(SceneManager.Instance.player.Room.Enemy);
             dynamicControls[0].interactable = true;
             dynamicControls[1].interactable = true;
+            UIController.OnEnemyUpdate();
+
         }
 
         //Enable chest/item related controls
@@ -110,6 +112,7 @@ namespace TextRPG
             SceneManager.Instance.player.Room.Chest = null; // Remove chest
             dynamicControls[2].interactable = false; // Disable loot button
 
+            UIController.OnPlayerStatChange();
         }
     }
 }

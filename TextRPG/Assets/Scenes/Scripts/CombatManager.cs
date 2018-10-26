@@ -37,6 +37,7 @@ public class CombatManager : MonoBehaviour {
             Destroy(EnemyComponent);
         }
         EnemyInCombat = null;
+        UIController.OnEnemyUpdate();
     }
 
 

@@ -17,7 +17,7 @@ namespace TextRPG
             Speed = 3;
             Name = "Walrus";
             Description = "a large walrus with sharp tusks";
-
+            EncounterText = "The walrus roars threateningly...";
             Inventory.Add("Walrus Tusk");
         }
 
@@ -27,6 +27,5 @@ namespace TextRPG
             GameJournal.Instance.Log(SceneManager.Instance.messages.BuildMessage(JournalMessages.MessageTypes.Retaliate, enemyAttackDamage.ToString()));
             SceneManager.Instance.player.TakeDamage(enemyAttackDamage);
         }
-
     }
 }
