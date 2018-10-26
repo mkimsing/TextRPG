@@ -61,10 +61,10 @@ namespace TextRPG {
 
         //Encounter messsages
         public const string EncounterEmpty = "You look around and find that this room is empty.";
-        public const string EncounterChest = " You see a chest in the center of the room. What would you like to do?";
+        public const string EncounterChest = "You see a chest in the center of the room. What would you like to do?";
         public const string EncounterChestColor = "<color=##66ffb3>"; // Teal-green
-        public const string EncounterExit = @"You see a stairway in the middle of the room. It seems to head down into the next floor.
-                What would you like to do?";
+        public const string EncounterExit = "You see a stairway in the middle of the room. It seems to head down into the next floor."
+            + " What would you like to do?";
         public const string EncounterEnemy1 = "You encounter ";
         public const string EncounterEnemy2 = "! \n What would you like to do?";
         public const string ExitFloor = "You take the stairway down to the next floor. According to your count, this is floor: ";

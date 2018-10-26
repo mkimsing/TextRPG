@@ -36,8 +36,7 @@ namespace TextRPG
         //Enable combat related controls
         public void CombatControls()
         {
-            this.enemy = SceneManager.Instance.player.Room.Enemy;
-            Debug.Log("new combat... enemy hp is: " + enemy.Health); // TODO: fix enemy reference bug
+            this.enemy = CombatManager.Instance.MakeEnemy(SceneManager.Instance.player.Room.Enemy);
             dynamicControls[0].interactable = true;
             dynamicControls[1].interactable = true;
         }
@@ -54,44 +53,6 @@ namespace TextRPG
             dynamicControls[3].interactable = true;
         }
 
-        public void Attack()
-        {
-            int playerAttackDamage = (int)(Random.value * (SceneManager.Instance.player.Attack - enemy.Defence));
-            
-            //Attack
-            GameJournal.Instance.Log(SceneManager.Instance.messages.BuildMessage(JournalMessages.MessageTypes.Attack, playerAttackDamage.ToString()));
-            enemy.TakeDamage(playerAttackDamage);
-
-
-            //TODO if dmg kills enemy, do not allow the enemy to retaliate
-
-            enemy.Strike();
-        }
-
-        public void Flee()
-        {
-            int enemyAttackDamage = (int)(Random.value * (enemy.Attack - SceneManager.Instance.player.Defence));
-            float playerRoll = Random.value;
-            float enemyRoll = Random.value;
-
-            GameJournal.Instance.Log(SceneManager.Instance.messages.BuildMessage(JournalMessages.MessageTypes.FleeAttempt));
-
-            SceneManager.Instance.player.TakeDamage(enemyAttackDamage); // Deal damage regardless of flee success
-
-            if (SceneManager.Instance.player.Speed * playerRoll > enemyRoll * enemy.Speed) //Successful escape
-            {
-                GameJournal.Instance.Log(SceneManager.Instance.messages.BuildMessage(JournalMessages.MessageTypes.FleeSuccess, enemyAttackDamage.ToString()));
-                SceneManager.Instance.player.Room.Enemy = null; // Remove the enemy
-                SceneManager.Instance.player.Room.Empty = true;
-                SceneManager.Instance.player.InvestigateRoom();
-            }
-            else // Failed escape
-            {
-                GameJournal.Instance.Log(SceneManager.Instance.messages.BuildMessage(JournalMessages.MessageTypes.FleeFail, enemyAttackDamage.ToString()));
-            }
-  
-        }
-
         public void ExitFloor()
         {
             StartCoroutine(SceneManager.Instance.player.world.GenerateFloor());
@@ -106,6 +67,8 @@ namespace TextRPG
             SceneManager.Instance.player.Gold += this.enemy.Gold;
             GameJournal.Instance.Log(SceneManager.Instance.messages.BuildMessage(JournalMessages.MessageTypes.Loot, 
                 this.enemy.Gold.ToString(), this.enemy.Name, this.enemy.Inventory[0]));
+
+            CombatManager.Instance.EndCombat(); // Reset combat manager
 
             SceneManager.Instance.player.Room.Enemy = null;
             SceneManager.Instance.player.Room.Empty = true;

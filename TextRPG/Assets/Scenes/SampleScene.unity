@@ -277,6 +277,47 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 69118037}
   m_CullTransparentMesh: 0
+--- !u!1 &109917303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 109917305}
+  - component: {fileID: 109917304}
+  m_Layer: 0
+  m_Name: CombatManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &109917304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 109917303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4adc4f942694be40b435d536a2bdeb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyInCombat: {fileID: 0}
+--- !u!4 &109917305
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 109917303}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 626.0223, y: 226.69336, z: -0.91028506}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &254536599
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,6 +935,7 @@ GameObject:
   - component: {fileID: 625465227}
   - component: {fileID: 625465231}
   - component: {fileID: 625465230}
+  - component: {fileID: 625465232}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -959,6 +1001,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa2ebe702ad65204e94e7e3e4e56ffe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &625465232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 625465226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9a4cb6be5f73fa40897f5d2c458246f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &644435602
@@ -1977,7 +2030,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 693279479}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.00000011906511
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2168,8 +2221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1df597be8520af84a81e73877f0cae83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  messages: {fileID: 0}
+  player: {fileID: 625465228}
+  messages: {fileID: 625465230}
 --- !u!4 &1459680734
 Transform:
   m_ObjectHideFlags: 0
@@ -2777,7 +2830,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1990652743}
+      - m_Target: {fileID: 625465232}
         m_MethodName: Attack
         m_Mode: 1
         m_Arguments:
@@ -3072,7 +3125,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1990652743}
+      - m_Target: {fileID: 625465232}
         m_MethodName: Flee
         m_Mode: 1
         m_Arguments:

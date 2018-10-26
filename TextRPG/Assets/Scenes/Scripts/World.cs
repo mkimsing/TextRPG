@@ -31,6 +31,8 @@ namespace TextRPG
             Vector2Int exitLocation = new Vector2Int(Random.Range(0, Grid.x), Random.Range(0, Grid.y));
             Dungeon[exitLocation.x, exitLocation.y].Exit = true;
             Dungeon[exitLocation.x, exitLocation.y].Empty = false;
+            Dungeon[exitLocation.x, exitLocation.y].Chest = null;
+            Dungeon[exitLocation.x, exitLocation.y].Enemy = null;
         }
     }
 }

@@ -76,6 +76,8 @@ namespace TextRPG
                 // Investigate Room
                 InvestigateRoom();
             }
+
+            Debug.Log("Location is: " + (int)RoomIndex.x + " " + (int)RoomIndex.y); //TODO remove debug statement
         }
 
         public void InvestigateRoom()
@@ -95,7 +97,6 @@ namespace TextRPG
             {
                 encounter.CombatControls();
                 GameJournal.Instance.Log(SceneManager.Instance.messages.BuildMessage(JournalMessages.MessageTypes.EncounterEnemy, "", Room.Enemy.Description));
-
 
             }
             else if (this.Room.Exit == true)
